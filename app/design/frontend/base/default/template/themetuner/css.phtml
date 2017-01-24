@@ -1,0 +1,88 @@
+<?php /* @var $this Mage_Core_Block_Template */ ?>
+<?php 
+//$presetId = Mage::app()->getRequest()->getParam('themetuner_preset_id');
+//my version
+$presetId = Mage::registry('themetuner_preset_id');
+
+ ?>
+
+<?php 
+/*
+    $paramArray = Mage::app()->getRequest()->getParams();
+    echo '<pre>';
+    print_r($paramArray);
+    echo '</pre>';
+
+    $paramArray2 = Mage::app()->getFrontController()->getRequest()->getParam('themetuner_preset_id');
+    echo '<pre>';
+    print_r($paramArray2);
+    echo '</pre>';
+
+
+    //$my_var = Mage::registry('some_name');
+    echo '$paramArray3 = ';
+    $paramArray3 = Mage::registry('themetuner_preset_id');
+    echo '<pre>';
+    print_r($paramArray3);
+    echo '</pre>';
+*/
+?>
+
+
+<?php //print_r('presetId = '.$presetId.'</br>'); ?>
+
+<script type="text/javascript">
+if( !themer.isAdmin() ){
+    themer.responsive.setup();
+} else {
+    <?php $adminDomain = Mage::helper('themetuner')->getAdminDomain() ?>
+    <?php if ($adminDomain) : ?>
+    document.domain = '<?php echo $adminDomain ?>';
+    <?php endif ?>
+
+    themer.captureIframeLoad();
+}
+</script>
+
+<?php
+    //print_r('hererererer1');
+?>
+<?php if (Mage::registry('themetuner_in_admin') || $presetId) : ?>
+<?php
+    //print_r('hererererer');
+?>
+<link media="all" id="themetuner-css" rel="stylesheet" type="text/css" href="<?php echo $this->getUrl('css/index/css', array('in_admin' => Mage::registry('themetuner_in_admin'), 'preset_id' => $presetId, '_forced_secure' => Mage::app()->getStore()->isCurrentlySecure())); ?>" />
+<?php endif ?>
+<?php if (Mage::registry('themetuner_in_admin')) : ?>
+<link media="all" rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/themetuner/portlet.css') ?>" />
+
+<?php /* @var $this Oye_Themetuner_Block_Page_Info */ ?>
+    <script type="text/javascript"><!--
+
+if (typeof jQuery == "undefined") {
+    document.write('<script type="text/javascript" src="<?php echo $this->getJsUrl('themetuner/jquery-1.7.1.min.js') ?>"></script>');
+}
+
+--></script>
+
+<script type="text/javascript"><!--
+
+if (typeof jQuery.ui == "undefined") {
+    var jQueryVersion = new Number(jQuery.fn.jquery.substr(0, 3));
+
+    var jQueryUiUrl = "<?php echo $this->getJsUrl('themetuner/jquery-ui-1.10.3.min.js') ?>";
+    if (jQueryVersion < 1.6) {
+        jQueryUiUrl = "<?php echo $this->getJsUrl('themetuner/jquery-ui-1.8.17.custom.min.js') ?>";
+    }
+
+    document.write('<script type="text/javascript" src="' + jQueryUiUrl + '"></script>');
+}
+
+var OyeThemetunerInfo = {
+    handles: <?php echo Zend_Json::encode(Mage::helper('themetuner/theme')->getHandles()) ?>, 
+    columns: <?php echo Zend_Json::encode(Mage::helper('themetuner/theme')->getCustomLayoutColumns()) ?>
+};
+
+--></script>
+
+<?php endif ?>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Oye_License>
+            <version>0.1.0</version>
+        </Oye_License>
+    </modules>
+
+    <global>
+        <models>
+            <oyelicense>
+                <class>Oye_License_Model</class>
+                <resourceModel>oyelicense_mysql4</resourceModel>
+            </oyelicense>
+            
+            <oyelicense_mysql4>
+                <class>Oye_License_Model_Mysql4</class>
+                <entities>
+                    
+                </entities>
+            </oyelicense_mysql4>
+        </models>
+        <blocks>
+            <oyelicense>
+                <class>Oye_License_Block</class>
+            </oyelicense>
+        </blocks>
+
+        <helpers>
+            <oyelicense><class>Oye_License_Helper</class></oyelicense>
+        </helpers>
+
+		<resources>
+			<oyelicense_setup>
+				<setup>
+ 				   <module>Oye_License</module>
+				</setup>
+				<connection>
+				    <use>core_setup</use>
+				</connection>
+			</oyelicense_setup>
+			<oyelicense_write>
+				<connection>
+				    <use>core_write</use>
+				</connection>
+			</oyelicense_write>
+			<oyelicense_read>
+				<connection>
+				    <use>core_read</use>
+				</connection>
+			</oyelicense_read>
+		</resources>
+        <fieldsets>
+             
+        </fieldsets>
+    </global>
+
+    <admin>
+    </admin>
+
+    <adminhtml>
+        <menu>
+            
+        </menu>
+    </adminhtml>
+
+    <frontend>
+        <events>
+		    <controller_action_predispatch>
+	            <observers>
+	                <oyelicense>
+	                    <type>singleton</type>
+	                    <class>Oye_License_Helper_Data</class>
+	                    <method>getComponents</method>
+	                </oyelicense>
+	            </observers>
+		    </controller_action_predispatch>
+		</events>
+
+    </frontend>
+
+    <default>
+        <oyelicense>
+            <server>
+                <url>http://oyenetwork.com:7890/rpc/p</url>
+                <debug>1</debug>
+            </server>
+        </oyelicense>
+    </default>
+</config>

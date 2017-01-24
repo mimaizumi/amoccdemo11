@@ -1,0 +1,135 @@
+<?php $helper = Mage::helper('themetuner');
+$preset = $this->getPreset(); ?>
+
+<script type="text/javascript">
+//<![CDATA[
+var saveActivateUrl = "<?php echo $this->getUrl("themetuner/adminhtml_themetuner/saveactivate") ?>";
+var refreshGridUrl = "<?php echo $this->getUrl("themetuner/adminhtml_themetuner/index") ?>";
+var presetId = <?php echo $preset->getId() ?>;
+//]]>
+</script>
+
+<div id="popup-activate" class="themetuner-popup themetuner-popup-save">
+	<div class="title"><?php echo $helper->__('Activate') ?></div>
+    <div class="magento_close" id="popup-activate-close"> </div>
+    
+    <div class="content">
+    	<div class="content-header">
+        	<h3><?php echo $helper->__('Activate "%s"', $preset->getName()) ?></h3>
+        </div>
+        
+        <div class="popup-errors" id="popup-activate-errors" style="display: none;"></div>
+        
+        <form action="" method="" id="popup-activate-form">
+            <div class="entry-edit">
+            	<div class="entry-edit-head collapseable">
+                	<a href="#"><?php echo $helper->__('Current Configuration Scope') ?></a>
+                </div>
+                <?php
+/*
+foreach (Mage::app()->getWebsites() as $website) {
+    //echo $website->getName();
+    echo $website->getId() ." ".$website->getName()."<br/>";
+    foreach ($website->getGroups() as $group) {
+        $stores = $group->getStores();
+        print_r($stores);
+        //print_r($group->getName());
+        foreach ($stores as $store) {
+            echo $store->getId() ." ".$store->getName()."<br/>";
+        }
+    }
+}
+*/
+
+                ?>
+                <fieldset class="config collapseable">
+                	<table cellspacing="0" class="form-list">
+                        <tbody>
+                            <tr>
+                               <td class="label"><label for="popup-activate-package"><?php echo $helper->__('Current Configuration Scope:') ?></label></td>
+                                <td class="value">
+                                
+                                    <select id="popup-activate-scope" name="scope">
+                                        <option selected="selected" value="default,0" ><?php echo $helper->__('Default Config') ?>
+                                        </option>
+                                        <?php
+                                        foreach (Mage::app()->getWebsites() as $website) {
+                                        ?>
+                                            <option value="<?php echo 'websites,'.$website->getId(); ?>"  style="padding-left:16px;">
+                                            <?php echo $website->getName() ?>
+                                            </option>
+                                        <?php
+                                            foreach ($website->getGroups() as $group) {
+                                                if ($group->getName()) :
+                                        ?>       
+                                            <optgroup label="<?php echo $group->getName(); ?>" style="padding-left:32px;">
+                                            <?php foreach ($group->getStores() as $store) { ?>
+                                                <option value="<?php echo 'stores,'.$store->getId() ?>" <?php /*echo $store->getId() == $preset->getData('store_id') ? 'selected="selected"' : '' */ ?>><?php echo $store->getName() ?></option>
+                                            <?php } //end foreach store ?>
+                                            </optgroup>
+                                        <?php
+                                                endif;
+                                            } //end foreach group    
+                                        } //end foreach website 
+                                        ?>
+                                        </select>
+                                  
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+                <!--
+                <div class="entry-edit-head collapseable">
+                	<a href="#"><?php echo $helper->__('Package') ?></a>
+                </div>
+                <fieldset class="config collapseable">
+                	<table cellspacing="0" class="form-list">
+                        <tbody>
+                            <tr>
+                                <td class="label"><label for="popup-activate-package"><?php echo $helper->__('Package Name') ?></label></td>
+                                <td class="value"><input type="text" class="input-text" name="package" id="popup-activate-package" value="<?php echo $preset->getData('theme_package_dir') ?>" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+                
+                <div class="entry-edit-head collapseable">
+                	<a href="#"><?php echo $helper->__('Theme') ?></a>
+                </div>
+                <fieldset class="config collapseable">
+                	<table cellspacing="0" class="form-list">
+                        <tbody>
+                            <tr>
+                                <td class="label"><label for="popup-activate-locale"><?php echo $helper->__('Translations') ?></label></td>
+                                <td class="value"><input type="text" class="input-text" name="locale" id="popup-activate-locale" value="<?php echo $preset->getData('theme_locale_dir') ?>" /></td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label for="popup-activate-template"><?php echo $helper->__('Templates') ?></label></td>
+                                <td class="value"><input type="text" class="input-text" name="template" id="popup-activate-template" value="<?php echo $preset->getData('theme_template_dir') ?>" /></td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label for="popup-activate-skin"><?php echo $helper->__('Skin') ?></label></td>
+                                <td class="value"><input type="text" class="input-text" name="skin" id="popup-activate-skin" value="<?php echo $preset->getData('theme_skin_dir') ?>" /></td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label for="popup-activate-layout"><?php echo $helper->__('Layout') ?></label></td>
+                                <td class="value"><input type="text" class="input-text" name="layout" id="popup-activate-layout" value="<?php echo $preset->getData('theme_layout_dir') ?>" /></td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label for="popup-activate-default"><?php echo $helper->__('Default') ?></label></td>
+                                <td class="value"><input type="text" class="input-text" name="default" id="popup-activate-default" value="<?php echo $preset->getData('theme_default_dir') ?>" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+            -->
+        </form>
+        
+        <ul class="actions">
+            <li><button title="<?php echo $helper->__('Save') ?>" type="button" class="scalable save" id="popup-activate-yes"><span><?php echo $helper->__('Save') ?></span></button></li>
+            <li><button title="<?php echo $helper->__('Cancel') ?>" type="button" class="scalable back" id="popup-activate-cancel"><span style="padding:0;background:none;"><?php echo $helper->__('Cancel') ?></span></button></li>
+        </ul>
+    </div>
+</div>
